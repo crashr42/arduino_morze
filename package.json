@@ -1,0 +1,16 @@
+{
+    "name": "Morze on Arduino",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "web": "node app.js",
+        "arduino": "node arduino.js"
+    },
+    "dependencies": {
+        "express": "3.4.8",
+        "jade": "*",
+        "johnny-five": "~0.7.3",
+        "socket.io": "*",
+        "jquery": "*"
+    }
+}
