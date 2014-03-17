@@ -83,6 +83,20 @@ var MorzeArduinoDevice = function (port, options, callback) {
         });
     };
 
+    var photoresistor = function (cb) {
+        onReady(function () {
+            if (!elements["photoresistor"]) {
+                elements["photoresistor"] = new j5.Sensor({
+                    pin: "A0",
+                    freq: 500,
+                    threshold: 5
+                });
+            }
+
+            cb.call(elements["photoresistor"]);
+        });
+    };
+
     var dot = function (promise) {
         onReady(function () {
             dotLed(function () {
@@ -171,6 +185,23 @@ var MorzeArduinoDevice = function (port, options, callback) {
                 if (buttonCallbacks["onDash"]) {
                     buttonCallbacks["onDash"]();
                     dash();
+                }
+            });
+        });
+
+        photoresistor(function () {
+            this.scale(0, 10).on('read', function () {
+                var value = this.value * 100;
+
+                if (value < 10) {
+                    beeper(function () {
+                        this.high();
+                    });
+                }
+                else {
+                    beeper(function () {
+                        this.low();
+                    });
                 }
             });
         });
